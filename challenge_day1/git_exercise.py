@@ -9,6 +9,7 @@ def team_intro():
     print(iskrasavtsev.get_my_name())
     print(Phoebe.get_my_name())
     print(Yinan.get_my_name())
+    print(Yifan.get_my_name())
     print(olessyuh.get_my_name())
 
     return team_intro()
