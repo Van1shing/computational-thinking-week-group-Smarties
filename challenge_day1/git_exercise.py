@@ -5,7 +5,7 @@ import Yifan
 import olessyuh
 
 def team_intro():
-    print("This is Team YourTeamNameHere. We are:")
+    print("This is Team Smarties. We are:")
     print(iskrasavtsev.get_my_name())
     print(Phoebe.get_my_name())
     print(Yinan.get_my_name())
