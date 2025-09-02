@@ -5,3 +5,4 @@ def solution_station_2(date_str: str) -> str:
     date_obj = datetime.datetime.strptime(date_str, "%Y-%m-%d")
     weekday = date_obj.weekday()
     return week_days_jp[weekday]
+
