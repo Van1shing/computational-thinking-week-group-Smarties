@@ -7,7 +7,7 @@ import olessyuh
 
 # Import story paragraphs
 from iskrasavtsev import paragraphs as is_paragraphs
-from Yinan import paragraphs as yinen_paragraphs
+from Yinan import paragraphs as yinan_paragraphs
 from Yifan import paragraphs as yifan_paragraphs
 from Phoebe import paragraphs as phoebe_paragraphs
 from olessyuh import paragraphs as olesya_paragraphs
@@ -28,7 +28,7 @@ def print_story():
     acts = [0, 1, 2]  # indices for first, second, third paragraph of each person
     team_names = [
         ("Is", is_paragraphs),
-        ("Yinen", yinen_paragraphs),
+        ("Yinan", yinan_paragraphs),
         ("Yifan", yifan_paragraphs),
         ("Phoebe", phoebe_paragraphs),
         ("Olesya", olesya_paragraphs)
@@ -41,7 +41,7 @@ def print_story():
             print(f"{author_name} says:")
             print(paragraphs[act].format(
                 name1="Is",
-                name2="Yinen",
+                name2="Yinan",
                 name3="Yifan",
                 name4="Phoebe",
                 name5="Olesya"
