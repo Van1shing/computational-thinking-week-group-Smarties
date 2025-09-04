@@ -9,9 +9,17 @@ SummaryMetaTable = {
     end
 }
 
--- Read data from `data4.txt`
+-- Helper: get current script directory
+local function script_dir()
+    local info = debug.getinfo(1, "S").source:sub(2)
+    return info:match("(.*/)")
+end
+
+local baseDir = script_dir() .. "../fulldata/"
+
+-- Read data from data4.txt
 local lines = {}
-for line in io.lines("../testdata/data4.txt") do
+for line in io.lines(baseDir .. "data4.txt") do
     table.insert(lines, line)
 end
 
@@ -23,7 +31,9 @@ local people = {}
 
 -- Process each line and collect data
 for _, line in ipairs(lines) do
-    local name, tech, soft, bus, creative, academic = line:match("([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+)")
+    local name, tech, soft, bus, creative, academic =
+        line:match("([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+)")
+
     local summary = {super=0, good=0, middle=0, low=0}
     setmetatable(summary, SummaryMetaTable)
 
@@ -35,7 +45,7 @@ for _, line in ipairs(lines) do
     if summary.super > 0 then
         finalSummary = "super"
     elseif summary.good >= 2 then
-        finalSummaries = "good"
+        finalSummary = "good"
     elseif summary.middle >= 3 then
         finalSummary = "middle"
     else
@@ -45,8 +55,8 @@ for _, line in ipairs(lines) do
     table.insert(people, {name, tech, soft, bus, creative, academic, finalSummary})
 end
 
--- Write data to `data5.txt`
-local out = io.open("data5.txt", "w")
+-- Write data to data5.txt
+local out = io.open(baseDir .. "data5.txt", "w")
 out:write("Name,Technical Skills,Soft Skills,Business Skills,Creative Skills,Academic Skills,Summary\n")
 for _, entry in ipairs(people) do
     out:write(table.concat(entry, ',') .. "\n")
