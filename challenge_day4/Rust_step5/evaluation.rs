@@ -12,20 +12,21 @@ fn main() -> io::Result<()> {
     let mut output = OpenOptions::new()
         .write(true)
         .create(true)
+        .truncate(true) 
         .open("data6.txt")?;
     
-    for (indexing, line) in reader.lines().enumerate() {
+    for (index, line) in reader.lines().enumerate() {
         let line = line?;
         
-        if indexing == 0 {
-            // This is the header, add "Evaluation" to it and write to file
+        if index == 0 {
+
             writeln!(output, "{},Evaluation", line)?;
             continue;
         }
         
         let parts: Vec<&str> = line.split(',').collect();
         if parts.len() < 7 {
-            continue; // Skip invalid lines
+            continue; 
         }
         
         let mut total_score = 0;
@@ -49,19 +50,18 @@ fn main() -> io::Result<()> {
                     total_score += 5;
                     num_skills += 1;
                 },
-                _ => (), // Skip if it's something else
+                _ => (), 
             }
         }
         
         let evaluation = if num_skills > 0 {
             (total_score as f32) / (num_skills as f32)
         } else {
-            0.0 // or whatever you want to set it to if no skills are evaluated
+            0.0
         };
         
-        writeln!(output, "{},{},{}", line, parts[6], evaluation)?;
+        writeln!(output, "{},{}", line, evaluation)?;
     }
     
     Ok(())
 }
-
