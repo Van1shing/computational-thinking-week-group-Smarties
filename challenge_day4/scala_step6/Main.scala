@@ -1,6 +1,3 @@
-import java.nio.file.{Files, Paths}
-import scala.util.Try
-
 object Main {
   def main(args: Array[String]): Unit = {
     val filePath = "data6.txt"
@@ -9,7 +6,7 @@ object Main {
       case (line, 0) => s"$line,Comments"
       case (line, _) =>
         val parts = line.split(",")
-        if (parts.length < 8) line // skip invalid lines
+        if (parts.length < 9) line
         else {
           val summary = parts(7)
           val evaluation = parts(8).toFloat
@@ -23,6 +20,6 @@ object Main {
         }
     }
 
-    Files.write(Paths.get("data7.txt"), output_each_Lines.mkString("\n").getBytes)
+    Files.write(Paths.get("data7.txt"), outputLines.mkString("\n").getBytes)
   }
 }
