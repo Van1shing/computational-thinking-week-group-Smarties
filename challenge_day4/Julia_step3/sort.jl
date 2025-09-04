@@ -1,31 +1,41 @@
-using DataFrames, CSV, Statistics, DelimitedFiles
+using CSV, DataFrames, Statistics
 
-people_df = CSV.File("../fulldata/data3.csv") |> DataFrame
+input_path  = "fulldata/data3.csv"
+output_path = "fulldata/data4.csv"
 
-function classify_score(score, quartiles)
-    if score <= quartiles[1]
-        return "low"
-    elseif score <= quartiles[2]
-        return "middle"
-    elseif score <= quartiles[3]
-        return "good"
-    else
-        return "super"
-    end
-end
+if isfile(input_path)
+    # Read CSV
+    df = CSV.File(input_path) |> DataFrame
 
-for col_name in names(people_df)[2:end]
-    col_data = map(x -> isa(x, Float64) && x == floor(x) ? Int(x) : x, people_df[!, col_name])
-    valid_data = filter(x -> x isa Int, col_data)
-
-    if isempty(valid_data)
-        println("No valid data for column $col_name")
-        continue
+    # Example processing: classify numeric columns
+    function classify_score(score, quartiles)
+        if score <= quartiles[1]
+            return "low"
+        elseif score <= quartiles[2]
+            return "middle"
+        elseif score <= quartiles[3]
+            return "good"
+        else
+            return "super"
+        end
     end
 
-    quartiles = quantile(valid_data, [0.25, 0.5, 0.75])
-    new_col = map(x -> x isa Int ? classify_score(x, quartiles) : "low", col_data)
-    people_df[!, col_name] = new_col
-end
+    for col_name in names(df)[2:end]  # skip first column if names
+        col_data = df[!, col_name]
+        numeric_data = filter(x -> isa(x, Number), col_data)
+        if isempty(numeric_data)
+            println("No numeric data for column $col_name")
+            continue
+        end
+        quartiles = quantile(Float64.(numeric_data), [0.25, 0.5, 0.75])
+        new_col = map(x -> isa(x, Number) ? classify_score(x, quartiles) : x, col_data)
+        df[!, col_name] = new_col
+    end
 
-CSV.write("../fulldata/data4.csv", people_df)
+    # Write output (will overwrite data4.csv if it exists)
+    CSV.write(output_path, df)
+    println("Processed data written to $output_path")
+
+else
+    println("Input file not found: $input_path. No output generated.")
+end
