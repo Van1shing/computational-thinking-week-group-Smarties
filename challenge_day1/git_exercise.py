@@ -14,7 +14,7 @@ from olessyuh import paragraphs as olesya_paragraphs
 name1 = iskrasavtsev.my_name
 name2 = Yinan.my_name
 name3 = Yifan.my_name
-d name4 = Phoebe.my_name
+name4 = Phoebe.my_name
 name5 = olessyuh.my_name
 
 def team_intro():
