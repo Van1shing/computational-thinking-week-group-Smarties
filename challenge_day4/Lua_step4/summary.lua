@@ -1,3 +1,12 @@
+-- Helper: get current script directory
+local function script_dir()
+    local info = debug.getinfo(1, "S").source:sub(2)
+    return info:match("(.*/)")
+end
+
+-- Base directory for input/output
+local baseDir = script_dir() .. "../fulldata/"
+
 -- Create a Metatable
 SummaryMetaTable = {
     __add = function (left, right)
@@ -8,14 +17,6 @@ SummaryMetaTable = {
         return newSummary
     end
 }
-
--- Helper: get current script directory
-local function script_dir()
-    local info = debug.getinfo(1, "S").source:sub(2)
-    return info:match("(.*/)")
-end
-
-local baseDir = script_dir() .. "../fulldata/"
 
 -- Read data from data4.txt
 local lines = {}
