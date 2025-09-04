@@ -1,0 +1,11 @@
+{
+    "julia.executablePath": "/Users/baiyifan/.juliaup/bin/julia",
+
+    "julia.enableTelemetry": true,
+
+    "files.encoding": "utf8",
+
+    "files.autoSave": "afterDelay",
+
+    "juliaFormatter.args": ["--indent", "4"]
+}
