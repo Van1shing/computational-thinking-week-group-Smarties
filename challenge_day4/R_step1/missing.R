@@ -14,7 +14,7 @@ script_dir <- dirname(script_path)
 
 # Build paths relative to script folder
 input_path  <- file.path(script_dir, "..", "fulldata", "data1.json")
-output_path <- file.path(script_dir, "..", "testdata", "data2.json")
+output_path <- file.path(script_dir, "..", "fulldata", "data2.json")
 
 # --- Read JSON ---
 json_text <- readLines(input_path, warn = FALSE)
