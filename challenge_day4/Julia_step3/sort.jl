@@ -1,15 +1,16 @@
-using CSV, DataFrames, Statistics
+using CSV, DataFrames, Statistics, DelimitedFiles
 
 cd(@__DIR__)
 
 input_path  = "../fulldata/data3.csv"
-output_path = "../fulldata/data4.csv"
+output_csv  = "../fulldata/data4.csv"
+output_txt  = "../fulldata/data4.txt"
 
 if isfile(input_path)
     # Read CSV
     df = CSV.File(input_path) |> DataFrame
 
-    # Example processing: classify numeric columns
+    # Classification function
     function classify_score(score, quartiles)
         if score <= quartiles[1]
             return "low"
@@ -22,22 +23,33 @@ if isfile(input_path)
         end
     end
 
-    for col_name in names(df)[2:end]  # skip first column if names
-        col_data = df[!, col_name]
-        numeric_data = filter(x -> isa(x, Number), col_data)
-        if isempty(numeric_data)
-            println("No numeric data for column $col_name")
+    # Process each skill column (skip first column "Name")
+    for col_name in names(df)[2:end]
+        col_data = map(x -> isa(x, Float64) && x == floor(x) ? Int(x) : x, df[!, col_name])
+        valid_data = filter(x -> x isa Int, col_data)
+
+        if isempty(valid_data)
+            println("⚠️ No valid data for column $col_name")
             continue
         end
-        quartiles = quantile(Float64.(numeric_data), [0.25, 0.5, 0.75])
-        new_col = map(x -> isa(x, Number) ? classify_score(x, quartiles) : x, col_data)
+
+        quartiles = quantile(valid_data, [0.25, 0.5, 0.75])
+
+        # Map numeric values to categories
+        new_col = map(x -> x isa Int ? classify_score(x, quartiles) : "low", col_data)
         df[!, col_name] = new_col
     end
 
-    # Write output (will overwrite data4.csv if it exists)
-    CSV.write(output_path, df)
-    println("Processed data written to $output_path")
+    # Save to CSV (for inspection)
+    CSV.write(output_csv, df)
 
+    # Save to TXT (for Lua)
+    header = string.(names(df))
+    data = Matrix(df)
+    all_data = vcat(reshape(header, 1, :), data)
+    writedlm(output_txt, all_data, ',')
+
+    println("✅ Processed data written to $output_csv and $output_txt")
 else
-    println("Input file not found: $input_path. No output generated.")
+    println("❌ Input file not found: $input_path. No output generated.")
 end
