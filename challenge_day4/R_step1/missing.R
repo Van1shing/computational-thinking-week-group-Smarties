@@ -13,7 +13,7 @@ script_path <- normalizePath(sub("--file=", "", args[grep("--file=", args)]))
 script_dir <- dirname(script_path)
 
 # Build paths relative to script folder
-input_path  <- file.path(script_dir, "..", "testdata", "data1.json")
+input_path  <- file.path(script_dir, "..", "fulldata", "data1.json")
 output_path <- file.path(script_dir, "..", "testdata", "data2.json")
 
 # --- Read JSON ---
