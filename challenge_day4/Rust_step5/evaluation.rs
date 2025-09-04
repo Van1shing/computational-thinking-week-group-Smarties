@@ -60,7 +60,7 @@ fn main() -> io::Result<()> {
             0.0
         };
         
-        writeln!(output, "{},{}", line, evaluation)?;
+        writeln!(output, "{},{},{}", line, parts[6], evaluation)?; 
     }
     
     Ok(())
