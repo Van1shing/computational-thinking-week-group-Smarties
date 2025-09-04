@@ -1,15 +1,15 @@
--- Helper: get current script directory
+-- Helper: get current script directory (computed only once)
 local function script_dir()
     local info = debug.getinfo(1, "S").source:sub(2)
-    return info:match("(.*/)")
+    return info:match("(.*/)") or "./"
 end
 
 -- Base directory for input/output
 local baseDir = script_dir() .. "../fulldata/"
 
--- Create a Metatable
-SummaryMetaTable = {
-    __add = function (left, right)
+-- Create a Metatable for summaries
+local SummaryMetaTable = {
+    __add = function(left, right)
         local newSummary = {super=0, good=0, middle=0, low=0}
         for k, v in pairs(left) do
             newSummary[k] = v + right[k]
@@ -20,14 +20,15 @@ SummaryMetaTable = {
 
 -- Read data from data4.txt
 local lines = {}
-for line in io.lines(baseDir .. "data4.txt") do
+local filepath = baseDir .. "data4.txt"
+for line in io.lines(filepath) do
     table.insert(lines, line)
 end
 
 -- Skip header
 table.remove(lines, 1)
 
--- Initialize empty table to hold summary counts for each person
+-- Initialize table to hold summary counts for each person
 local people = {}
 
 -- Process each line and collect data
