@@ -4,17 +4,17 @@ import Yifan
 import Phoebe
 import olessyuh
 
-from is_story import paragraphs as is_paragraphs
-from yinen_story import paragraphs as yinen_paragraphs
-from yifan_story import paragraphs as yifan_paragraphs
-from phoebe_story import paragraphs as phoebe_paragraphs
-from olesya_story import paragraphs as olesya_paragraphs
+from iskrasavtsev import paragraphs as is_paragraphs
+from Yinan import paragraphs as yinan_paragraphs
+from Yifan import paragraphs as yifan_paragraphs
+from Phoebe import paragraphs as phoebe_paragraphs
+from olessyuh import paragraphs as olesya_paragraphs
 
 # Map variables from each file
 name1 = iskrasavtsev.my_name
 name2 = Yinan.my_name
 name3 = Yifan.my_name
-name4 = Phoebe.my_name
+d name4 = Phoebe.my_name
 name5 = olessyuh.my_name
 
 def team_intro():
@@ -30,7 +30,7 @@ def print_story():
     acts = [0, 1, 2]
     team_names = [
         ("Is", is_paragraphs),
-        ("Yinen", yinen_paragraphs),
+        ("Yinen", yinan_paragraphs),
         ("Yifan", yifan_paragraphs),
         ("Phoebe", phoebe_paragraphs),
         ("Olesya", olesya_paragraphs)

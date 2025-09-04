@@ -1,7 +1,9 @@
 using CSV, DataFrames, Statistics
 
-input_path  = "fulldata/data3.csv"
-output_path = "fulldata/data4.csv"
+cd(@__DIR__)
+
+input_path  = "../fulldata/data3.csv"
+output_path = "../fulldata/data4.csv"
 
 if isfile(input_path)
     # Read CSV
